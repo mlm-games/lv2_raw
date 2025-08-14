@@ -23,7 +23,6 @@
 
 //! Documentation of the corresponding C header files: http://lv2plug.in/ns/extensions/ui/ui.html.
 
-use core::*;
 use std::os::raw::*;
 
 use crate::LV2Feature;

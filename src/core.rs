@@ -111,7 +111,7 @@ pub struct LV2Descriptor {
         descriptor: *const LV2Descriptor,
         rate: f64,
         bundle_path: *const c_char,
-        features: *const (*const LV2Feature),
+        features: *const *const LV2Feature,
     ) -> LV2Handle,
     /**
         Connect a port on a plugin instance to a memory location.
@@ -243,5 +243,5 @@ pub struct LV2Descriptor {
 
         The host is never responsible for freeing the returned value.
     */
-    pub extension_data: extern "C" fn(uri: *const c_char) -> (*const c_void),
+    pub extension_data: extern "C" fn(uri: *const c_char) -> *const c_void,
 }

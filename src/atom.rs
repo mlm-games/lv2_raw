@@ -22,7 +22,7 @@
 //! Documentation of the corresponding C header files: http://lv2plug.in/ns/ext/atom/.
 
 use crate::{
-    atomutils, lv2_atom_object_begin, lv2_atom_object_is_end, lv2_atom_object_next,
+    lv2_atom_object_begin, lv2_atom_object_is_end, lv2_atom_object_next,
     lv2_atom_sequence_begin, lv2_atom_sequence_is_end, lv2_atom_sequence_next,
 };
 use std::mem::transmute;
@@ -213,7 +213,7 @@ impl LV2AtomObject {
     pub unsafe fn foreach<F>(&mut self, mut closure: F)
     where
         F: FnMut(*mut LV2AtomPropertyBody) -> bool,
-    {
+    { unsafe {
         let body = &(self.body);
         let mut it = lv2_atom_object_begin(body);
         while !lv2_atom_object_is_end(body, self.atom.size, it) {
@@ -222,7 +222,7 @@ impl LV2AtomObject {
             }
             it = lv2_atom_object_next(it);
         }
-    }
+    }}
 }
 
 /** The header of an atom:Event.  Note this type is NOT an LV2_Atom. */
@@ -281,12 +281,12 @@ impl LV2AtomSequence {
     pub unsafe fn foreach<F>(&mut self, mut closure: F) -> ()
     where
         F: FnMut(*const LV2AtomEvent) -> (),
-    {
+    { unsafe {
         let body = &(self.body);
         let mut it = lv2_atom_sequence_begin(body);
         while !lv2_atom_sequence_is_end(body, self.atom.size, it) {
             closure(it);
             it = lv2_atom_sequence_next(it);
         }
-    }
+    }}
 }

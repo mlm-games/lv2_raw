@@ -34,7 +34,7 @@ use std::os::raw::{c_char, c_void};
 pub unsafe fn lv2_features_data(
     features: *const *const LV2Feature,
     curi: *const c_char,
-) -> *mut c_void {
+) -> *mut c_void { unsafe {
     if !features.is_null() {
         let mut feature = *features;
         let nul = std::ptr::null::<LV2Feature>();
@@ -54,7 +54,7 @@ pub unsafe fn lv2_features_data(
         }
     }
     std::ptr::null_mut()
-}
+}}
 
 pub struct FeatureHelper {
     pub urid: *const c_char,
@@ -87,9 +87,9 @@ pub struct FeatureHelper {
 pub unsafe fn lv2_features_query(
     features: *const *const LV2Feature,
     query: &[FeatureHelper],
-) -> *const c_char {
+) -> *const c_char { unsafe {
     for it in query {
-        let mut data = it.data;
+        let data = it.data;
         *data = lv2_features_data(features, it.urid);
         if it.required && (*data).is_null() {
             return it.urid;
@@ -97,4 +97,4 @@ pub unsafe fn lv2_features_query(
     }
 
     std::ptr::null()
-}
+}}
