@@ -62,21 +62,18 @@ pub struct LV2Feature {
     pub data: *mut c_void,
 }
 
-/**
-    Plugin Descriptor.
-
-    This structure provides the core functions necessary to instantiate and use
-    a plugin.
-*/
+/// Plugin Descriptor.
+///
+/// This structure provides the core functions necessary to instantiate and use
+/// a plugin.
 #[repr(C)]
+#[derive(Debug)]
 pub struct LV2Descriptor {
-    /**
-        A globally unique, case-sensitive identifier for this plugin.
-
-        This MUST be a valid URI string as defined by RFC 3986.  All plugins with
-        the same URI MUST be compatible to some degree, see
-        http://lv2plug.in/ns/lv2core for details.
-    */
+    /// A globally unique, case-sensitive identifier for this plugin.
+    ///
+    /// This MUST be a valid URI string as defined by RFC 3986.  All plugins with
+    /// the same URI MUST be compatible to some degree, see
+    /// http://lv2plug.in/ns/lv2core for details.
     pub uri: *const c_char,
 
     /**
@@ -230,18 +227,16 @@ pub struct LV2Descriptor {
     */
     pub cleanup: extern "C" fn(instance: LV2Handle),
 
-    /**
-        Return additional plugin data defined by some extenion.
-
-        A typical use of this facility is to return a struct containing function
-        pointers to extend the LV2_Descriptor API.
-
-        The actual type and meaning of the returned object MUST be specified
-        precisely by the extension. This function MUST return NULL for any
-        unsupported URI. If a plugin does not support any extension data, this
-        field may be NULL.
-
-        The host is never responsible for freeing the returned value.
-    */
-    pub extension_data: extern "C" fn(uri: *const c_char) -> *const c_void,
+    /// Return additional plugin data defined by some extension.
+    ///
+    /// A typical use of this facility is to return a struct containing function
+    /// pointers to extend the LV2_Descriptor API.
+    ///
+    /// The actual type and meaning of the returned object MUST be specified
+    /// precisely by the extension. This function MUST return NULL for any
+    /// unsupported URI. If a plugin does not support any extension data, this
+    /// field may be NULL.
+    ///
+    /// The host is never responsible for freeing the returned value.
+    pub extension_data: Option<extern "C" fn(uri: *const c_char) -> *const c_void>,
 }
