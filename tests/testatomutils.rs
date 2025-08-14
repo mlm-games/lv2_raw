@@ -1,6 +1,3 @@
-extern crate libc;
-extern crate lv2_raw;
-
 use lv2_raw::*;
 use std::mem;
 
