@@ -9,8 +9,7 @@ repository = "https://github.com/poidl/lv2_raw"
 readme = "README.md"
 keywords = ["lv2", "audio", "plugin", "ffi"]
 license = "ISC"
-edition = "2021"                                                                                                                     # Add edition field
-rust-version = "1.56"                                                                                                                # Specify minimum supported Rust version
+edition = "2024"
 
 [dependencies]
 libc = "0.2"
