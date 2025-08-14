@@ -152,14 +152,15 @@ pub struct LV2UIDescriptorRaw {
 
        This member may be NULL if the UI is not interested in any port events.
     */
-    pub port_event: extern "C" fn(
-        ui: LV2UIHandle,
-        port_index: c_uint,
-        buffer_size: c_uint,
-        format: c_uint,
-        buffer: *const c_void,
-    ),
-
+    pub port_event: Option<
+        extern "C" fn(
+            ui: LV2UIHandle,
+            port_index: c_uint,
+            buffer_size: c_uint,
+            format: c_uint,
+            buffer: *const c_void,
+        ),
+    >,
     /**
        Return a data structure associated with an extension URI, typically an
        interface struct with additional function pointers
@@ -294,5 +295,5 @@ pub struct LV2UIExternalUIHost {
      * If supplied by host, the string will be referenced only during
      * LV2UI_Descriptor::instantiate()
      */
-    pub plugin_human_id: *const c_char,
+    pub plugin_human_id: Option<*const c_char>,
 }
