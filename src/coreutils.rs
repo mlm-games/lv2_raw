@@ -20,11 +20,9 @@
 
 //! Documentation of the corresponding C header files (part of LV2 core): http://lv2plug.in/ns/lv2core/.
 
-use core::*;
-use std::ffi::*;
-use std::os::raw::*;
-
 use crate::LV2Feature;
+use std::ffi::CStr;
+use std::os::raw::{c_char, c_void};
 
 /**
    Return the data for a feature in a features array.
@@ -59,9 +57,9 @@ pub unsafe fn lv2_features_data(
 }
 
 pub struct FeatureHelper {
-    urid: *const c_char,
-    data: *mut *mut c_void,
-    required: bool,
+    pub urid: *const c_char,
+    pub data: *mut *mut c_void,
+    pub required: bool,
 }
 
 /**
@@ -98,5 +96,5 @@ pub unsafe fn lv2_features_query(
         }
     }
 
-    return std::ptr::null();
+    std::ptr::null()
 }
