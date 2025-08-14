@@ -39,7 +39,7 @@ pub unsafe fn lv2_features_data(
 ) -> *mut c_void {
     if !features.is_null() {
         let mut feature = *features;
-        let nul = 0 as *const LV2Feature;
+        let nul = std::ptr::null::<LV2Feature>();
         let uri = CStr::from_ptr(curi).to_string_lossy().into_owned();
 
         let mut i = 0;
@@ -55,7 +55,7 @@ pub unsafe fn lv2_features_data(
             i += 1;
         }
     }
-    0 as *mut c_void
+    std::ptr::null_mut()
 }
 
 pub struct FeatureHelper {
@@ -98,5 +98,5 @@ pub unsafe fn lv2_features_query(
         }
     }
 
-    return 0 as *const c_char;
+    return std::ptr::null();
 }

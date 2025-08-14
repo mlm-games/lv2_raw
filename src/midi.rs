@@ -102,7 +102,7 @@ pub enum LV2MidiMessageType {
 }
 
 impl LV2MidiMessageType {
-    pub fn from_u8(x: u8) -> LV2MidiMessageType {
+    pub const fn from_u8(x: u8) -> LV2MidiMessageType {
         match x {
             0 => LV2MidiMessageType::LV2MidiMsgInvalid,
             0x80 => LV2MidiMessageType::LV2MidiMsgNoteOff,
@@ -127,7 +127,7 @@ impl LV2MidiMessageType {
         }
     }
 
-    pub fn to_u8(self) -> u8 {
+    pub const fn to_u8(self) -> u8 {
         match self {
             LV2MidiMessageType::LV2MidiMsgInvalid => 0,
             LV2MidiMessageType::LV2MidiMsgNoteOff => 0x80,
