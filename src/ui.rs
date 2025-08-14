@@ -26,6 +26,8 @@
 use core::*;
 use std::os::raw::*;
 
+use crate::LV2Feature;
+
 /**
    A pointer to UI instance internals.
 
@@ -123,7 +125,7 @@ pub struct LV2UIDescriptorRaw {
         write_function: LV2UIWriteFunctionRaw,
         controller: LV2UIControllerRaw,
         widget: *mut LV2UIWidget,
-        features: *const (*const LV2Feature),
+        features: *const *const LV2Feature,
     ) -> LV2UIHandle,
 
     /**

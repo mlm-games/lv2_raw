@@ -24,6 +24,8 @@ use core::*;
 use std::ffi::*;
 use std::os::raw::*;
 
+use crate::LV2Feature;
+
 /**
    Return the data for a feature in a features array.
 

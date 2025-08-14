@@ -18,7 +18,7 @@
 
 //! Documentation of the corresponding C header files (part of LV2 Atom): http://lv2plug.in/ns/ext/atom/atom.html.
 
-use atom::*;
+use crate::atom::*;
 use libc::{memcmp, memcpy};
 use std::mem::size_of;
 use std::os::raw::*;
@@ -109,7 +109,7 @@ pub unsafe fn lv2_atom_sequence_append_event(
     let total_size = size_of::<LV2AtomEvent>() as u32 + (*event).body.size;
 
     if (capacity - (*seq).atom.size) < total_size {
-        return 0 as *const LV2AtomEvent;
+        return std::ptr::null();
     }
 
     let e = lv2_atom_sequence_end(&(*seq).body, (*seq).atom.size);

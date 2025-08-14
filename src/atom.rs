@@ -21,7 +21,10 @@
 
 //! Documentation of the corresponding C header files: http://lv2plug.in/ns/ext/atom/.
 
-use atomutils::*;
+use crate::{
+    atomutils, lv2_atom_object_begin, lv2_atom_object_is_end, lv2_atom_object_next,
+    lv2_atom_sequence_begin, lv2_atom_sequence_is_end, lv2_atom_sequence_next,
+};
 use std::mem::transmute;
 
 pub static LV2_ATOM_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/atom\0";
