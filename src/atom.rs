@@ -65,6 +65,7 @@ pub static LV2_ATOM__TIMEUNIT: &'static [u8] = b"http://lv2plug.in/ns/ext/atom#t
 
 /** The header of an atom:Atom. */
 #[repr(C)]
+#[derive(Debug, Clone, Copy)]
 pub struct LV2Atom {
     /**< Size in bytes, not including type and size. */
     pub size: u32,
@@ -209,15 +210,14 @@ pub struct LV2AtomObject {
 }
 
 impl LV2AtomObject {
-    pub unsafe fn foreach<F>(&mut self, mut closure: F) -> ()
+    pub unsafe fn foreach<F>(&mut self, mut closure: F)
     where
         F: FnMut(*mut LV2AtomPropertyBody) -> bool,
     {
         let body = &(self.body);
         let mut it = lv2_atom_object_begin(body);
         while !lv2_atom_object_is_end(body, self.atom.size, it) {
-            let res = closure(it);
-            if res {
+            if closure(it) {
                 break;
             }
             it = lv2_atom_object_next(it);

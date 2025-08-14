@@ -27,13 +27,13 @@
 
 use std::os::raw::*;
 
-/**
-    Plugin Instance Handle.
-
-    This is a handle for one particular instance of a plugin.  It is valid to
-    compare to NULL (or 0 for C++) but otherwise the host MUST NOT attempt to
-    interpret it.
-*/
+/// Plugin Instance Handle.
+///
+/// This is a handle for one particular instance of a plugin.  It is valid to
+/// compare to NULL (or 0 for C++) but otherwise the host MUST NOT attempt to
+/// interpret it.
+///
+/// This is an opaque pointer that should not be dereferenced directly.
 pub type LV2Handle = *mut c_void;
 
 /**

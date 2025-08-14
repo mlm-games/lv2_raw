@@ -4,17 +4,14 @@ extern crate lv2_raw;
 use lv2_raw::*;
 use std::mem;
 
-// Need to define constant for buffer allocation, which must be identical
-// to n
-const N: usize = 64;
-
-const TYPE1: u32 = 7; // random type
-const TYPE2: u32 = 8;
-const TIME1: i64 = 33333; // random data
-const TIME2: i64 = 44444;
+const BUFFER_SIZE: usize = 64; // Need to define constant for buffer allocation
+const EVENT_TYPE_1: u32 = 7; // random type
+const EVENT_TYPE_2: u32 = 8;
+const EVENT_TIME_1: i64 = 33333; // random data
+const EVENT_TIME_2: i64 = 44444;
 // event pad size is 64 bits, using u64 no is padding necessary
-const ATOMDATA1: u64 = 11; // random data
-const ATOMDATA2: u64 = 22;
+const ATOM_DATA_1: u64 = 11; // random data
+const ATOM_DATA_2: u64 = 22;
 
 fn get_buf() -> State {
     // Construct a sequence of two events by hand:
@@ -28,16 +25,16 @@ fn get_buf() -> State {
     let s_ev = mem::size_of::<LV2AtomEvent>() as isize;
     let s_atom = 8 as isize;
     let n = s_seq + 2 * s_ev + 2 * s_atom;
-    if n != N as isize {
+    if n != BUFFER_SIZE as isize {
         panic!(
             "Need to adjust buffer size. Size is {}. Buffer is {}.",
-            n, N
+            n, BUFFER_SIZE
         )
     }
     let s_atom_header = mem::size_of::<LV2Atom>() as isize;
     let atom = LV2Atom {
         // Size in bytes, not including type and size.
-        size: N as u32 - s_atom_header as u32,
+        size: BUFFER_SIZE as u32 - s_atom_header as u32,
         // Type of this atom (mapped URI).
         mytype: 0,
     };
@@ -59,22 +56,22 @@ fn get_buf() -> State {
     ////////////////////////////////////////
     let atom_ev1 = LV2Atom {
         size: s_atom as u32,
-        mytype: TYPE1,
+        mytype: EVENT_TYPE_1,
     };
     let atom_ev2 = LV2Atom {
         size: s_atom as u32,
-        mytype: TYPE2,
+        mytype: EVENT_TYPE_2,
     };
     let event1 = LV2AtomEvent {
-        time_in_frames: TIME1,
+        time_in_frames: EVENT_TIME_1,
         body: atom_ev1,
     };
     let event2 = LV2AtomEvent {
-        time_in_frames: TIME2,
+        time_in_frames: EVENT_TIME_2,
         body: atom_ev2,
     };
 
-    let buf = [1u8; N];
+    let buf = [1u8; BUFFER_SIZE];
 
     let mut state = State {
         buf: buf,
@@ -87,13 +84,13 @@ fn get_buf() -> State {
     // Event 1
     let p = &event1 as *const LV2AtomEvent as *const libc::c_void;
     state.append(p, s_ev);
-    let p = &ATOMDATA1 as *const u64 as *const libc::c_void;
+    let p = &ATOM_DATA_1 as *const u64 as *const libc::c_void;
     state.append(p, s_atom);
 
     // Event 2
     let p = &event2 as *const LV2AtomEvent as *const libc::c_void;
     state.append(p, s_ev);
-    let p = &ATOMDATA2 as *const u64 as *const libc::c_void;
+    let p = &ATOM_DATA_2 as *const u64 as *const libc::c_void;
     state.append(p, s_atom);
 
     state
@@ -102,12 +99,12 @@ fn get_buf() -> State {
 #[test]
 fn it_works() {
     let truth = [
-        TIME1 as u64,
-        TYPE1 as u64,
-        ATOMDATA1,
-        TIME2 as u64,
-        TYPE2 as u64,
-        ATOMDATA2,
+        EVENT_TIME_1 as u64,
+        EVENT_TYPE_1 as u64,
+        ATOM_DATA_1,
+        EVENT_TIME_2 as u64,
+        EVENT_TYPE_2 as u64,
+        ATOM_DATA_2,
     ];
 
     let s_atom_header = mem::size_of::<LV2Atom>() as isize;
@@ -142,7 +139,7 @@ fn it_works() {
 }
 
 struct State {
-    buf: [u8; N],
+    buf: [u8; BUFFER_SIZE],
     current: isize,
 }
 

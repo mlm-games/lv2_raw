@@ -25,12 +25,14 @@ use std::os::raw::*;
 
 /// Pad a size to 64 bits
 #[inline]
+#[must_use]
 pub fn lv2_atom_pad_size(size: u32) -> u32 {
     (size + 7) & (!7)
 }
 
 /** Return the total size of `atom`, including the header. */
 #[inline]
+#[must_use]
 pub fn lv2_atom_total_size(atom: &LV2Atom) -> u32 {
     size_of::<LV2Atom>() as u32 + atom.size
 }
