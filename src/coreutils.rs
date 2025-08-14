@@ -1,97 +1,77 @@
 // Copyright 2017 Michael Oswald
-
-// Documentation copied from http://lv2plug.in/ns/lv2core/lv2_util.h
-
-// Copyright text of the original C file:
-
 // Copyright 2016 David Robillard <http://drobilla.net>
 
-// Permission to use, copy, modify, and/or distribute this software for any
-// purpose with or without fee is hereby granted, provided that the above
-// copyright notice and this permission notice appear in all copies.
+//! Utility functions for LV2 core features.
 
-// THIS SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-//! Documentation of the corresponding C header files (part of LV2 core): http://lv2plug.in/ns/lv2core/.
-
-use crate::LV2Feature;
+use crate::core::LV2Feature;
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_void};
+use std::ptr::NonNull;
 
-/**
-   Return the data for a feature in a features array.
-
-   If the feature is not found, NULL is returned.  Note that this function is
-   only useful for features with data, and can not detect features that are
-   present but have NULL data.
-*/
+/// Return the data for a feature in a features array.
+///
+/// If the feature is not found, None is returned.
+///
+/// # Safety
+///
+/// The features array and URI string must be valid pointers.
 pub unsafe fn lv2_features_data(
     features: *const *const LV2Feature,
     curi: *const c_char,
-) -> *mut c_void { unsafe {
-    if !features.is_null() {
-        let mut feature = *features;
-        let nul = std::ptr::null::<LV2Feature>();
-        let uri = CStr::from_ptr(curi).to_string_lossy().into_owned();
-
-        let mut i = 0;
-        while feature != nul {
-            let f = CStr::from_ptr((*feature).uri)
-                .to_string_lossy()
-                .into_owned();
-            if f == uri {
-                return (*feature).data;
-            }
-
-            feature = *features.offset(i);
-            i += 1;
-        }
+) -> Option<NonNull<c_void>> { unsafe {
+    if features.is_null() {
+        return None;
     }
-    std::ptr::null_mut()
+
+    let uri = CStr::from_ptr(curi).to_string_lossy();
+
+    let mut i = 0;
+    loop {
+        let feature = *features.add(i);
+        if feature.is_null() {
+            break;
+        }
+
+        let feature_uri = CStr::from_ptr((*feature).uri).to_string_lossy();
+        if feature_uri == uri {
+            return NonNull::new((*feature).data);
+        }
+
+        i += 1;
+    }
+
+    None
 }}
 
+/// Helper for feature queries.
+#[derive(Debug)]
 pub struct FeatureHelper {
+    /// Feature URI
     pub urid: *const c_char,
+    /// Pointer to store feature data
     pub data: *mut *mut c_void,
+    /// Whether this feature is required
     pub required: bool,
 }
 
-/**
-   Query a features array.
-
-   This function allows getting several features in one call, and detect
-   missing required features, with the same caveat of lv2_features_data().
-
-   The arguments should be a series of const char* uri, void** data, bool
-   required, terminated by a NULL URI.  The data pointers MUST be initialized
-   to NULL.  For example:
-
-   @code
-   LV2_URID_Log* log = NULL;
-   LV2_URID_Map* map = NULL;
-   const char* missing = lv2_features_query(
-        features,
-        LV2_LOG__log,  &log, false,
-        LV2_URID__map, &map, true,
-        NULL);
-   @endcode
-
-   @return NULL on success, otherwise the URI of this missing feature.
-*/
+/// Query a features array.
+///
+/// # Safety
+///
+/// All pointers must be valid and data pointers must be initialized to NULL.
+///
+/// # Returns
+///
+/// NULL on success, otherwise the URI of the missing required feature.
 pub unsafe fn lv2_features_query(
     features: *const *const LV2Feature,
     query: &[FeatureHelper],
 ) -> *const c_char { unsafe {
     for it in query {
-        let data = it.data;
-        *data = lv2_features_data(features, it.urid);
-        if it.required && (*data).is_null() {
+        let data_ptr = lv2_features_data(features, it.urid);
+        *it.data = data_ptr.map_or(std::ptr::null_mut(), |p| p.as_ptr());
+
+        if it.required && (*it.data).is_null() {
             return it.urid;
         }
     }

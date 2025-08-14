@@ -36,7 +36,7 @@ fn get_buf() -> State {
         // Size in bytes, not including type and size.
         size: BUFFER_SIZE as u32 - s_atom_header as u32,
         // Type of this atom (mapped URI).
-        mytype: 0,
+        type_: 0,
     };
 
     let seqbody = LV2AtomSequenceBody {
@@ -56,11 +56,11 @@ fn get_buf() -> State {
     ////////////////////////////////////////
     let atom_ev1 = LV2Atom {
         size: s_atom as u32,
-        mytype: EVENT_TYPE_1,
+        type_: EVENT_TYPE_1,
     };
     let atom_ev2 = LV2Atom {
         size: s_atom as u32,
-        mytype: EVENT_TYPE_2,
+        type_: EVENT_TYPE_2,
     };
     let event1 = LV2AtomEvent {
         time_in_frames: EVENT_TIME_1,
@@ -121,8 +121,8 @@ fn it_works() {
             println! {"*************TIME: {}", ev.time_in_frames}
             assert_eq!(ev.time_in_frames as u64, truth[cnt]);
 
-            println! {"*************ATOM.MYTYPE: {}", ev.body.mytype}
-            assert_eq!(ev.body.mytype as u64, truth[cnt + 1]);
+            println! {"*************ATOM.type_: {}", ev.body.type_}
+            assert_eq!(ev.body.type_ as u64, truth[cnt + 1]);
 
             let atomptr = &ev.body as *const LV2Atom as *const u8;
 
