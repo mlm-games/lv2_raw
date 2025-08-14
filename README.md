@@ -1,3 +1,17 @@
+# Raw Rust Bindings for the LV2 Audio Plugin API
+
+This crate provides low-level, unsafe FFI bindings for the LV2 audio plugin C-API.
+
+It is designed to be a direct, one-to-one translation of the C interface, intended for developers who need raw access to the LV2 ABI. This includes #[repr(C)] structs, C-compatible function signatures, and re-implementations of C header helper functions. 
+
+Forked initially for fixing an error regarding a personal project, and now maintaining the crate,
+
+
+## Credits
+Credits to podli for the original translation, all the credits below from the original readme still apply here,
+
+# Original readme
+
 # Exposes the raw LV2 interface (C language) to Rust
 
 LV2 docs: http://lv2plug.in/
