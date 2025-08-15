@@ -7,7 +7,6 @@
 //! between plugins and hosts.
 
 use crate::atomutils::*;
-use std::mem::transmute;
 
 /// LV2 Atom URI as bytes (null-terminated)
 pub const LV2_ATOM_URI: &[u8] = b"http://lv2plug.in/ns/ext/atom\0";
