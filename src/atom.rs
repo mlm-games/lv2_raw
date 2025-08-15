@@ -268,7 +268,7 @@ impl LV2AtomEvent {
     #[inline]
     #[must_use]
     pub unsafe fn time_as_beats(&self) -> f64 {
-        unsafe { transmute::<i64, f64>(self.time_in_frames) }
+        unsafe { f64::from_bits(i64::cast_unsigned(self.time_in_frames)) }
     }
 }
 
