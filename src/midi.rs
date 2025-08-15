@@ -18,58 +18,50 @@
 
 //! Documentation of the corresponding C header files: <http://lv2plug.in/ns/ext/midi/midi.html>.
 
-pub static LV2_MIDI_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/midi\0";
-pub static LV2_MIDI_PREFIX: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#\0";
+pub static LV2_MIDI_URI: &[u8] = b"http://lv2plug.in/ns/ext/midi\0";
+pub static LV2_MIDI_PREFIX: &[u8] = b"http://lv2plug.in/ns/ext/midi#\0";
 
-pub static LV2_MIDI__ACTIVESENSE: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#ActiveSense\0";
-pub static LV2_MIDI__AFTERTOUCH: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Aftertouch\0";
-pub static LV2_MIDI__BENDER: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Bender\0";
-pub static LV2_MIDI__CHANNELPRESSURE: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#ChannelPressure\0";
-pub static LV2_MIDI__CHUNK: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Chunk\0";
-pub static LV2_MIDI__CLOCK: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Clock\0";
-pub static LV2_MIDI__CONTINUE: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Continue\0";
-pub static LV2_MIDI__CONTROLLER: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Controller\0";
-pub static LV2_MIDI__MIDIEVENT: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#MidiEvent\0";
-pub static LV2_MIDI__NOTEOFF: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#NoteOff\0";
-pub static LV2_MIDI__NOTEON: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#NoteOn\0";
-pub static LV2_MIDI__PROGRAMCHANGE: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#ProgramChange\0";
-pub static LV2_MIDI__QUARTERFRAME: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#QuarterFrame\0";
-pub static LV2_MIDI__RESET: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Reset\0";
-pub static LV2_MIDI__SONGPOSITION: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#SongPosition\0";
-pub static LV2_MIDI__SONGSELECT: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#SongSelect\0";
-pub static LV2_MIDI__START: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Start\0";
-pub static LV2_MIDI__STOP: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Stop\0";
-pub static LV2_MIDI__SYSTEMCOMMON: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#SystemCommon\0";
-pub static LV2_MIDI__SYSTEMEXCLUSIVE: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#SystemExclusive\0";
-pub static LV2_MIDI__SYSTEMMESSAGE: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#SystemMessage\0";
-pub static LV2_MIDI__SYSTEMREALTIME: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#SystemRealtime\0";
-pub static LV2_MIDI__TICK: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Tick\0";
-pub static LV2_MIDI__TUNEREQUEST: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#TuneRequest\0";
-pub static LV2_MIDI__VOICEMESSAGE: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#VoiceMessage\0";
-pub static LV2_MIDI__BENDERVALUE: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#benderValue\0";
-pub static LV2_MIDI__BINDING: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#binding\0";
-pub static LV2_MIDI__BYTENUMBER: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#byteNumber\0";
-pub static LV2_MIDI__CHANNEL: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#channel\0";
-pub static LV2_MIDI___CHUNK: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#chunk\0";
-pub static LV2_MIDI__CONTROLLERNUMBER: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#controllerNumber\0";
-pub static LV2_MIDI__CONTROLLERVALUE: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#controllerValue\0";
-pub static LV2_MIDI__NOTENUMBER: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#noteNumber\0";
-pub static LV2_MIDI__PRESSURE: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#pressure\0";
-pub static LV2_MIDI__PROGRAMNUMBER: &'static [u8] =
-    b"http://lv2plug.in/ns/ext/midi#programNumber\0";
-pub static LV2_MIDI__PROPERTY: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#property\0";
-pub static LV2_MIDI__SONGNUMBER: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#songNumber\0";
-pub static LV2_MIDI___SONGPOSITION: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#songPosition\0";
-pub static LV2_MIDI__STATUS: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#status\0";
-pub static LV2_MIDI__STATUSMASK: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#statusMask\0";
-pub static LV2_MIDI__VELOCITY: &'static [u8] = b"http://lv2plug.in/ns/ext/midi#velocity\0";
+pub static LV2_MIDI__ACTIVESENSE: &[u8] = b"http://lv2plug.in/ns/ext/midi#ActiveSense\0";
+pub static LV2_MIDI__AFTERTOUCH: &[u8] = b"http://lv2plug.in/ns/ext/midi#Aftertouch\0";
+pub static LV2_MIDI__BENDER: &[u8] = b"http://lv2plug.in/ns/ext/midi#Bender\0";
+pub static LV2_MIDI__CHANNELPRESSURE: &[u8] = b"http://lv2plug.in/ns/ext/midi#ChannelPressure\0";
+pub static LV2_MIDI__CHUNK: &[u8] = b"http://lv2plug.in/ns/ext/midi#Chunk\0";
+pub static LV2_MIDI__CLOCK: &[u8] = b"http://lv2plug.in/ns/ext/midi#Clock\0";
+pub static LV2_MIDI__CONTINUE: &[u8] = b"http://lv2plug.in/ns/ext/midi#Continue\0";
+pub static LV2_MIDI__CONTROLLER: &[u8] = b"http://lv2plug.in/ns/ext/midi#Controller\0";
+pub static LV2_MIDI__MIDIEVENT: &[u8] = b"http://lv2plug.in/ns/ext/midi#MidiEvent\0";
+pub static LV2_MIDI__NOTEOFF: &[u8] = b"http://lv2plug.in/ns/ext/midi#NoteOff\0";
+pub static LV2_MIDI__NOTEON: &[u8] = b"http://lv2plug.in/ns/ext/midi#NoteOn\0";
+pub static LV2_MIDI__PROGRAMCHANGE: &[u8] = b"http://lv2plug.in/ns/ext/midi#ProgramChange\0";
+pub static LV2_MIDI__QUARTERFRAME: &[u8] = b"http://lv2plug.in/ns/ext/midi#QuarterFrame\0";
+pub static LV2_MIDI__RESET: &[u8] = b"http://lv2plug.in/ns/ext/midi#Reset\0";
+pub static LV2_MIDI__SONGPOSITION: &[u8] = b"http://lv2plug.in/ns/ext/midi#SongPosition\0";
+pub static LV2_MIDI__SONGSELECT: &[u8] = b"http://lv2plug.in/ns/ext/midi#SongSelect\0";
+pub static LV2_MIDI__START: &[u8] = b"http://lv2plug.in/ns/ext/midi#Start\0";
+pub static LV2_MIDI__STOP: &[u8] = b"http://lv2plug.in/ns/ext/midi#Stop\0";
+pub static LV2_MIDI__SYSTEMCOMMON: &[u8] = b"http://lv2plug.in/ns/ext/midi#SystemCommon\0";
+pub static LV2_MIDI__SYSTEMEXCLUSIVE: &[u8] = b"http://lv2plug.in/ns/ext/midi#SystemExclusive\0";
+pub static LV2_MIDI__SYSTEMMESSAGE: &[u8] = b"http://lv2plug.in/ns/ext/midi#SystemMessage\0";
+pub static LV2_MIDI__SYSTEMREALTIME: &[u8] = b"http://lv2plug.in/ns/ext/midi#SystemRealtime\0";
+pub static LV2_MIDI__TICK: &[u8] = b"http://lv2plug.in/ns/ext/midi#Tick\0";
+pub static LV2_MIDI__TUNEREQUEST: &[u8] = b"http://lv2plug.in/ns/ext/midi#TuneRequest\0";
+pub static LV2_MIDI__VOICEMESSAGE: &[u8] = b"http://lv2plug.in/ns/ext/midi#VoiceMessage\0";
+pub static LV2_MIDI__BENDERVALUE: &[u8] = b"http://lv2plug.in/ns/ext/midi#benderValue\0";
+pub static LV2_MIDI__BINDING: &[u8] = b"http://lv2plug.in/ns/ext/midi#binding\0";
+pub static LV2_MIDI__BYTENUMBER: &[u8] = b"http://lv2plug.in/ns/ext/midi#byteNumber\0";
+pub static LV2_MIDI__CHANNEL: &[u8] = b"http://lv2plug.in/ns/ext/midi#channel\0";
+pub static LV2_MIDI___CHUNK: &[u8] = b"http://lv2plug.in/ns/ext/midi#chunk\0";
+pub static LV2_MIDI__CONTROLLERNUMBER: &[u8] = b"http://lv2plug.in/ns/ext/midi#controllerNumber\0";
+pub static LV2_MIDI__CONTROLLERVALUE: &[u8] = b"http://lv2plug.in/ns/ext/midi#controllerValue\0";
+pub static LV2_MIDI__NOTENUMBER: &[u8] = b"http://lv2plug.in/ns/ext/midi#noteNumber\0";
+pub static LV2_MIDI__PRESSURE: &[u8] = b"http://lv2plug.in/ns/ext/midi#pressure\0";
+pub static LV2_MIDI__PROGRAMNUMBER: &[u8] = b"http://lv2plug.in/ns/ext/midi#programNumber\0";
+pub static LV2_MIDI__PROPERTY: &[u8] = b"http://lv2plug.in/ns/ext/midi#property\0";
+pub static LV2_MIDI__SONGNUMBER: &[u8] = b"http://lv2plug.in/ns/ext/midi#songNumber\0";
+pub static LV2_MIDI___SONGPOSITION: &[u8] = b"http://lv2plug.in/ns/ext/midi#songPosition\0";
+pub static LV2_MIDI__STATUS: &[u8] = b"http://lv2plug.in/ns/ext/midi#status\0";
+pub static LV2_MIDI__STATUSMASK: &[u8] = b"http://lv2plug.in/ns/ext/midi#statusMask\0";
+pub static LV2_MIDI__VELOCITY: &[u8] = b"http://lv2plug.in/ns/ext/midi#velocity\0";
 
 /**
    MIDI Message Type.
@@ -241,14 +233,7 @@ pub fn lv2_midi_is_voice_message(msg: &[u8]) -> bool {
    Return true iff `msg` is a MIDI system message (which has no channel).
 */
 pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
-    match msg[0] {
-        0xF4 => false,
-        0xF5 => false,
-        0xF7 => false,
-        0xF9 => false,
-        0xFD => false,
-        _ => true,
-    }
+    !matches!(msg[0], 0xF4 | 0xF5 | 0xF7 | 0xF9 | 0xFD)
 }
 
 /**
