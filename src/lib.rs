@@ -1,4 +1,5 @@
-// test
+//! Fast and easy queue abstraction.
+
 extern crate libc;
 
 pub mod atom;
