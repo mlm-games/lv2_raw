@@ -8,7 +8,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MSRV: "1.75"
   CARGO_TERM_COLOR: always
   RUSTFLAGS: -Dwarnings
 
@@ -47,13 +46,13 @@ jobs:
         run: cargo doc --workspace --all-features --no-deps
 
   msrv:
-    name: MSRV ${{ env.MSRV }}
+    name: MSRV
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ${{ env.MSRV }}
+          toolchain: stable
       - uses: Swatinem/rust-cache@v2
       - run: cargo build --workspace --all-features
 
