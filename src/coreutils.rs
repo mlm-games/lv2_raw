@@ -18,30 +18,32 @@ use std::ptr::NonNull;
 pub unsafe fn lv2_features_data(
     features: *const *const LV2Feature,
     curi: *const c_char,
-) -> Option<NonNull<c_void>> { unsafe {
-    if features.is_null() {
-        return None;
-    }
-
-    let uri = CStr::from_ptr(curi).to_string_lossy();
-
-    let mut i = 0;
-    loop {
-        let feature = *features.add(i);
-        if feature.is_null() {
-            break;
+) -> Option<NonNull<c_void>> {
+    unsafe {
+        if features.is_null() {
+            return None;
         }
 
-        let feature_uri = CStr::from_ptr((*feature).uri).to_string_lossy();
-        if feature_uri == uri {
-            return NonNull::new((*feature).data);
+        let uri = CStr::from_ptr(curi).to_string_lossy();
+
+        let mut i = 0;
+        loop {
+            let feature = *features.add(i);
+            if feature.is_null() {
+                break;
+            }
+
+            let feature_uri = CStr::from_ptr((*feature).uri).to_string_lossy();
+            if feature_uri == uri {
+                return NonNull::new((*feature).data);
+            }
+
+            i += 1;
         }
 
-        i += 1;
+        None
     }
-
-    None
-}}
+}
 
 /// Helper for feature queries.
 #[derive(Debug)]
@@ -66,15 +68,17 @@ pub struct FeatureHelper {
 pub unsafe fn lv2_features_query(
     features: *const *const LV2Feature,
     query: &[FeatureHelper],
-) -> *const c_char { unsafe {
-    for it in query {
-        let data_ptr = lv2_features_data(features, it.urid);
-        *it.data = data_ptr.map_or(std::ptr::null_mut(), |p| p.as_ptr());
+) -> *const c_char {
+    unsafe {
+        for it in query {
+            let data_ptr = lv2_features_data(features, it.urid);
+            *it.data = data_ptr.map_or(std::ptr::null_mut(), |p| p.as_ptr());
 
-        if it.required && (*it.data).is_null() {
-            return it.urid;
+            if it.required && (*it.data).is_null() {
+                return it.urid;
+            }
         }
-    }
 
-    std::ptr::null()
-}}
+        std::ptr::null()
+    }
+}

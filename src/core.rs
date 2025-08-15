@@ -23,7 +23,7 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-//! Documentation of the corresponding C header files: http://lv2plug.in/ns/lv2core/.
+//! Documentation of the corresponding C header files: <http://lv2plug.in/ns/lv2core/>.
 
 use std::os::raw::*;
 
@@ -73,7 +73,7 @@ pub struct LV2Descriptor {
     ///
     /// This MUST be a valid URI string as defined by RFC 3986.  All plugins with
     /// the same URI MUST be compatible to some degree, see
-    /// http://lv2plug.in/ns/lv2core for details.
+    /// <http://lv2plug.in/ns/lv2core> for details.
     pub uri: *const c_char,
 
     /**

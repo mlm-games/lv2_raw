@@ -227,16 +227,18 @@ impl LV2AtomObject {
     pub unsafe fn foreach<F>(&mut self, mut closure: F)
     where
         F: FnMut(*mut LV2AtomPropertyBody) -> bool,
-    { unsafe {
-        let body = &self.body;
-        let mut it = lv2_atom_object_begin(body);
-        while !lv2_atom_object_is_end(body, self.atom.size, it) {
-            if closure(it) {
-                break;
+    {
+        unsafe {
+            let body = &self.body;
+            let mut it = lv2_atom_object_begin(body);
+            while !lv2_atom_object_is_end(body, self.atom.size, it) {
+                if closure(it) {
+                    break;
+                }
+                it = lv2_atom_object_next(it);
             }
-            it = lv2_atom_object_next(it);
         }
-    }}
+    }
 }
 
 /// The header of an atom:Event.  Note this type is NOT an LV2_Atom.
@@ -265,9 +267,9 @@ impl LV2AtomEvent {
     /// the sequence uses frame time will return meaningless data.
     #[inline]
     #[must_use]
-    pub unsafe fn time_as_beats(&self) -> f64 { unsafe {
-        transmute::<i64, f64>(self.time_in_frames)
-    }}
+    pub unsafe fn time_as_beats(&self) -> f64 {
+        unsafe { transmute::<i64, f64>(self.time_in_frames) }
+    }
 }
 
 /// The body of an atom:Sequence (a sequence of events).
@@ -304,12 +306,14 @@ impl LV2AtomSequence {
     pub unsafe fn foreach<F>(&mut self, mut closure: F)
     where
         F: FnMut(*const LV2AtomEvent),
-    { unsafe {
-        let body = &self.body;
-        let mut it = lv2_atom_sequence_begin(body);
-        while !lv2_atom_sequence_is_end(body, self.atom.size, it) {
-            closure(it);
-            it = lv2_atom_sequence_next(it);
+    {
+        unsafe {
+            let body = &self.body;
+            let mut it = lv2_atom_sequence_begin(body);
+            while !lv2_atom_sequence_is_end(body, self.atom.size, it) {
+                closure(it);
+                it = lv2_atom_sequence_next(it);
+            }
         }
-    }}
+    }
 }

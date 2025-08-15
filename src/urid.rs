@@ -18,7 +18,7 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-//! Documentation of the corresponding C header files: http://lv2plug.in/ns/ext/urid/urid.html.
+//! Documentation of the corresponding C header files: <http://lv2plug.in/ns/ext/urid/urid.html>.
 
 use std::os::raw::*;
 
