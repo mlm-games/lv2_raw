@@ -20,13 +20,11 @@
 
 //! Documentation of the corresponding C header files: <http://lv2plug.in/ns/ext/time/time.html>.
 
-/**
-   Properties for describing time, see <http://lv2plug.in/ns/ext/time> for
-   details.
-
-   Note the time extension is purely data, this header merely defines URIs for
-   convenience.
-*/
+//! Properties for describing time, see <http://lv2plug.in/ns/ext/time> for
+//! details.
+//!
+//! Note the time extension is purely data, this header merely defines URIs for
+//! convenience.
 
 pub static LV2_TIME_URI: &[u8] = b"http://lv2plug.in/ns/ext/time\0";
 pub static LV2_TIME_PREFIX: &[u8] = b"http://lv2plug.in/ns/ext/time#\0";

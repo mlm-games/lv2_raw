@@ -32,7 +32,6 @@ use crate::LV2Feature;
 
    The host may compare this to NULL, but otherwise MUST NOT interpret it.
 */
-
 pub type LV2UIHandle = *mut c_void;
 
 /**
