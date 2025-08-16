@@ -20,7 +20,7 @@ fn get_buf() -> State {
 
     let s_seq = mem::size_of::<LV2AtomSequence>() as isize;
     let s_ev = mem::size_of::<LV2AtomEvent>() as isize;
-    let s_atom = 8 as isize;
+    let s_atom = 8_isize;
     let n = s_seq + 2 * s_ev + 2 * s_atom;
     if n != BUFFER_SIZE as isize {
         panic!(
@@ -45,7 +45,7 @@ fn get_buf() -> State {
 
     let sequence = LV2AtomSequence {
         // Atom header.
-        atom: atom,
+        atom,
         // Body.
         body: seqbody,
     };
@@ -71,7 +71,7 @@ fn get_buf() -> State {
     let buf = [1u8; BUFFER_SIZE];
 
     let mut state = State {
-        buf: buf,
+        buf,
         current: 0,
     };
 
@@ -128,7 +128,7 @@ fn it_works() {
             println! {"************ data: {}", data};
             assert_eq!(data as u64, truth[cnt + 2]);
 
-            cnt = cnt + 3;
+            cnt += 3;
         }
         // did we really loop throuh *2* events?
         assert_eq!(cnt, 6)
@@ -146,6 +146,6 @@ impl State {
         unsafe {
             libc::memcpy(p1.offset(self.current), p, size as usize);
         }
-        self.current = self.current + size;
+        self.current += size;
     }
 }
