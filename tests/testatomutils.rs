@@ -70,10 +70,7 @@ fn get_buf() -> State {
 
     let buf = [1u8; BUFFER_SIZE];
 
-    let mut state = State {
-        buf,
-        current: 0,
-    };
+    let mut state = State { buf, current: 0 };
 
     let p = &sequence as *const LV2AtomSequence as *const libc::c_void;
     state.append(p, s_seq);
