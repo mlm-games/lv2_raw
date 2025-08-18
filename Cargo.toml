@@ -8,7 +8,7 @@ homepage = "https://github.com/mlm-games/lv2_raw"
 repository = "https://github.com/mlm-games/lv2_raw"
 readme = "README.md"
 keywords = ["lv2", "audio", "plugin", "ffi"]
-license = "ISC"
+license = "ISC OR MIT OR Apache-2.0"
 edition = "2024"
 
 [dependencies]
