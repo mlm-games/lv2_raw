@@ -123,7 +123,7 @@ fn it_works() {
             let dataptr = atomptr.offset(s_atom_header);
             let data = *(dataptr as *const u64);
             println! {"************ data: {}", data};
-            assert_eq!(data as u64, truth[cnt + 2]);
+            assert_eq!(data, truth[cnt + 2]);
 
             cnt += 3;
         }
