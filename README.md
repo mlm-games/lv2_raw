@@ -4,7 +4,7 @@ This crate provides low-level, unsafe FFI bindings for the LV2 audio plugin C-AP
 
 It is designed to be a direct, one-to-one translation of the C interface, intended for developers who need raw access to the LV2 ABI. This includes #[repr(C)] structs, C-compatible function signatures, and re-implementations of C header helper functions. 
 
-Forked initially for fixing an error regarding a personal project, and now maintaining the crate,
+Forked initially for fixing an error regarding a personal project, and now maintaining the crate...
 
 
 ## Credits
